@@ -3,7 +3,7 @@
       "target": "es5",
       "module": "commonjs",
       "sourceMap": true,
-      "lib": ["ES2015"],
+      "lib": ["ES2022"],
       "skipLibCheck": true
     }
   }

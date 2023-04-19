@@ -2,15 +2,51 @@
 /// <reference path="node_modules/@types/p5/global.d.ts"/>
 /// <reference path="node_modules/@types/p5/constants.d.ts"/>
 
+let board;
+let images = [];
+function preload() {
+    images.push(loadImage("assets/0-empty.png"));
+    images.push(loadImage("assets/1-bottom.png"));
+    images.push(loadImage("assets/2-left.png"));
+    images.push(loadImage("assets/3-top.png"));
+    images.push(loadImage("assets/4-right.png"));
+}
+
+let WIDTH = 10;
+let HEIGHT = 10;
+let TILE_SIZE = 100;
+
+function setup() {
+    createCanvas(WIDTH * TILE_SIZE, HEIGHT * TILE_SIZE);
+    board = new Board(WIDTH, HEIGHT);
+}
+
+function draw() {
+    background(200);
+    if (!board.isDone()) {
+        board.collapseNextTile();
+    }
+    for (let y = 0; y < HEIGHT; y++) {
+        for (let x = 0; x < WIDTH; x++) {
+            const image_index = board.getTile(x, y);
+            if (image_index >= -1) {
+                image(images[image_index], x * 100, y * 100);
+            }
+        }   
+    }
+}
+
+
+/*
 const TILE_SIZE = 100;
 const NUMBER_OF_TILES = 10;
 
 let images = [];
 
-/**    [0]
- * [3] [X] [1]
- *     [2]
- */
+//    [0]
+// [3] [X] [1]
+//     [2]
+//
 const banned_tile_mapping = [
     [[2,3,4],[1,3,4],[1,2,4],[1,2,3]], // 0
     [[0,1],[0,2],[1,2,4],[0,4]],
@@ -116,3 +152,4 @@ function draw() {
     let [target_x, target_y] = lowest_entropy_tiles[int(random(0,lowest_entropy_tiles.length))];
     collapseTile(target_x, target_y);
 }
+*/
